@@ -3,9 +3,9 @@ package org.sistema.springmvc.forms.controllers;
 import java.util.List;
 import java.util.Map;
 
-import org.sistema.springmvc.forms.dao.UserDAO;
-import org.sistema.springmvc.forms.models.Task;
-import org.sistema.springmvc.forms.models.User;
+import org.sistema.springmvc.forms.dao.StockDAO;
+import org.sistema.springmvc.forms.models.Producto;
+import org.sistema.springmvc.forms.models.Stock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,96 +17,96 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for users.
+ * Controller for stocks. 
  * 
  * @author Eugenia Pérez Martínez
  *
  */
 @Controller
-public class UserController {
+public class StockController {
 	private static final Logger logger = LoggerFactory
-			.getLogger(UserController.class);
+			.getLogger(StockController.class);
 
 	@Autowired
-	private UserDAO userDAO;
+	private StockDAO stockDAO;
 
 
 	/**
-	 * handles default /users
+	 * handles default /stocks
 	 * 
 	 * @param model
-	 * @return the name of the view to show RequestMapping({"/users"})
+	 * @return the name of the view to show RequestMapping({"/stocks"})
 	 */
 
-	@RequestMapping(method = RequestMethod.GET, value = { "/", "/users" })
-	public String showUsers(Map<String, Object> model) {
-		logger.info("User showUsers. ");
+	@RequestMapping(method = RequestMethod.GET, value = { "/", "/stocks" })
+	public String showStocks(Map<String, Object> model) {
+		logger.info("Stock showStocks. ");
 
 		
-		List<User> users = userDAO.selectAll();
-		model.put("users", users);
+		List<Stock> stocks = stockDAO.selectAll(Stock.class);
+		model.put("stocks", stocks);
 
-		return "user/users";
+		return "stock/stocks";
 	}
 
 	/**
-	 * handles default /users/id
+	 * handles default /stocks/id
 	 * 
 	 * @param model
-	 * @return the name of the view to show RequestMapping({"/users/{id}"})
+	 * @return the name of the view to show RequestMapping({"/stocks/{id}"})
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = { "/users/{id}" })
-	public String userDetail(@PathVariable(value = "id") Integer id,
+	@RequestMapping(method = RequestMethod.GET, value = { "/stocks/{id}" })
+	public String stockDetail(@PathVariable(value = "id") Integer id,
 			Map<String, Object> model) {
-		logger.info("User detail");
+		logger.info("Stock detail");
 
-		User user = userDAO.selectById(id);
-		//The user gets his own collection of tasks load
-		model.put("user", user);
+		Stock stock = stockDAO.selectById(id, Stock.class);
+		//The stock gets his own collection of productos load
+		model.put("stock", stock);
 		
-		// We add task for the new task form
-		Task task = new Task();
-		task.setUser(user);
-		model.put("task", task);
+		// We add producto for the new producto form
+		Producto producto = new Producto();
+		producto.setStock(stock);
+		model.put("producto", producto);
 
-		return "user/userDetail";
+		return "stock/stockDetail";
 	}
 	
 	
 	/**
-	 * handles /users/new by GET
+	 * handles /stocks/new by GET
 	 * 
-	 * @return the name of the view to show RequestMapping({"/users/new"})
+	 * @return the name of the view to show RequestMapping({"/stocks/new"})
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = { "/users/new" })
-	public String newUser(Map<String, Object> model) {
+	@RequestMapping(method = RequestMethod.GET, value = { "/stocks/new" })
+	public String newStock(Map<String, Object> model) {
 		logger.info("Showing custom view GET ");
 
-		model.put("user", new User());
+		model.put("stock", new Stock());
 
-		return "user/newUser";
+		return "stock/newStock";
 	}
 
 	/**
-	 * handles /users/new by POST
+	 * handles /stocks/new by POST
 	 * 
-	 * @return the name of the view to show RequestMapping({"/users/new"})
+	 * @return the name of the view to show RequestMapping({"/stocks/new"})
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = { "/users/new" })
-	public ModelAndView createUser(User user) {
-		logger.info("Saveview POST " + user.getId());
+	@RequestMapping(method = RequestMethod.POST, value = { "/stocks/new" })
+	public ModelAndView createStock(Stock stock) {
+		logger.info("Saveview POST " + stock.getId());
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		if (userDAO.create(user) > 0) {
+		if (stockDAO.insert(stock)) {
 			// We return view name
-			modelAndView.setViewName("user/created");
-			modelAndView.addObject("user", user);
+			modelAndView.setViewName("stock/created");
+			modelAndView.addObject("stock", stock);
 		} else {
 			modelAndView.setViewName("error");
 			modelAndView
 					.addObject("error",
-							"An error ocurred while trying to create a new user. Please, try again");
+							"An error ocurred while trying to create a new stock. Please, try again");
 		}
 		return modelAndView;
 	}
@@ -117,48 +117,48 @@ public class UserController {
 	/**
 	 * Simply selects the update view
 	 */
-	@RequestMapping(value = "/users/update/{id}", method = RequestMethod.GET)
-	public String update(@PathVariable(value = "id") Integer userId, Model model) {
+	@RequestMapping(value = "/stocks/update/{id}", method = RequestMethod.GET)
+	public String update(@PathVariable(value = "id") Integer stockId, Model model) {
 		logger.info("Showing update view GET ");
 
-		// We find the user through DAO and load into model
-		model.addAttribute("user", userDAO.selectById(userId));
+		// We find the stock through DAO and load into model
+		model.addAttribute("stock", stockDAO.selectById(stockId, Stock.class));
 
-		return "user/update";
+		return "stock/update";
 	}
 
 	/**
-	 * Handles the POST from the Custom.jsp page to update the User.
+	 * Handles the POST from the Custom.jsp page to update the Stock.
 	 */
-	@RequestMapping(value = "/users/saveupdate", method = RequestMethod.POST)
-	public ModelAndView saveUpdate(User user) {
-		logger.info("Save update " + user.getId());
+	@RequestMapping(value = "/stocks/saveupdate", method = RequestMethod.POST)
+	public ModelAndView saveUpdate(Stock stock) {
+		logger.info("Save update " + stock.getId());
 
-		userDAO.update(user.getId(), user);
+		stockDAO.update(stock);
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		// We pass the user received through this object
-		modelAndView.addObject("user", user);
+		// We pass the stock received through this object
+		modelAndView.addObject("stock", stock);
 
-		// The same as return "user/saveUpdate"
-		modelAndView.setViewName("user/saveUpdated");
+		// The same as return "stock/saveUpdate"
+		modelAndView.setViewName("stock/saveUpdated");
 		return modelAndView;
 	}
 	
 	
 
 	/**
-	 * Delete the specific user
+	 * Delete the specific stock
 	 */
-	@RequestMapping(value = "/users/delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable(value = "id") Integer userId, Model model) {
-		logger.info("User detail /delete");
-		
-		userDAO.delete(userId);
-		model.addAttribute("userId", userId);
+	@RequestMapping(value = "/stocks/delete/{id}", method = RequestMethod.GET)
+	public String delete(@PathVariable(value = "id") Integer stockId, Model model) {
+		logger.info("Stock detail /delete");
+		Stock stock = stockDAO.selectById(stockId, Stock.class);
+		stockDAO.delete(stock);
+		model.addAttribute("stockId", stockId);
 
-		return "user/deleted";
+		return "stock/deleted";
 	}
 	
 

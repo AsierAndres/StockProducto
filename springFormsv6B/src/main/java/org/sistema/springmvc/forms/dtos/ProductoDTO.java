@@ -2,24 +2,39 @@ package org.sistema.springmvc.forms.dtos;
 
 
 /**
- * Represents a Task.
+ * Represents a Producto.
  * 
  * @author Eugenia Pérez Martínez
  *
  */
-public class TaskDTO {
-
+public class ProductoDTO {
+	//@Pattern(regexp = "[0-9]+", message = "Must contain only numbers")
+	//@Size(min=1, message = "Minimun size is 1")
 	private int id;
+	
+	//@NotNull(message = "The name is required")
+	//@Pattern(regexp = "[A-Za-z]+", message = "Must contain only chars")
 	private String name;
+	
+
+	//@NotNull(message = "The description is required")
+	//@Pattern(regexp = "[A-Za-z]+", message = "Must contain only chars")
 	private String description;
+	
+	//@Size(min=0D, message ="Minimun size is 0")
+	private float pvp;
 	//Adding new fields
-	private int userId;
-	private String userLogin;
+
+	//@Pattern(regexp = "[0-9]+", message = "Must contain only numbers")
+	//@Size(min=1, message = "Minimun size is 1")
+	private int stockId;
+	
+	private int stockEstanteria;
 	
 	/**
 	 * default constructor
 	 */
-	public TaskDTO () {
+	public ProductoDTO () {
 		
 	}
 	
@@ -27,14 +42,15 @@ public class TaskDTO {
 	 * @param id
 	 * @param name
 	 * @param description
-	 * @param user
+	 * @param stock
 	 */
-	public TaskDTO(int id, String name, String description, int userId, String userLogin) {
+	public ProductoDTO(int id, String name, String description, float pvp, int stockId, int stockEstanteria) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.userId = userId;
-		this.userLogin = userLogin;
+		this.pvp = pvp;
+		this.stockId = stockId;
+		this.stockEstanteria = stockEstanteria;
 	}
 
 	/**
@@ -79,20 +95,34 @@ public class TaskDTO {
 		this.description = description;
 	}
 
-	public int getUserId() {
-		return userId;
+	/**
+	 * @param pvp the pvp to set
+	 */
+	public void setPvp(float pvp) {
+		this.pvp = pvp;
+	}
+	
+	/**
+	 * @return the pvp
+	 */
+	public float getPvp() {
+		return pvp;
+	}
+	
+	public int getStockId() {
+		return stockId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setStockId(int stockId) {
+		this.stockId = stockId;
 	}
 
-	public String getUserLogin() {
-		return userLogin;
+	public int getstockEstanteria() {
+		return stockEstanteria;
 	}
 
-	public void setUserLogin(String userLogin) {
-		this.userLogin = userLogin;
+	public void setstockEstanteria(int stockEstanteria) {
+		this.stockEstanteria = stockEstanteria;
 	}
 
 

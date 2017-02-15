@@ -1,22 +1,36 @@
 package org.sistema.springmvc.forms.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 /**
- * Represents a Task.
+ * Represents a Producto.
  * 
  * @author Eugenia Pérez Martínez
  *
  */
-public class Task {
 
+@Entity
+public class Producto {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	
 	private String name;
 	private String description;
-	private User user;
+	private float pvp;
+	
+	@ManyToOne
+	private Stock stock;
 	
 	/**
 	 * default constructor
 	 */
-	public Task () {
+	public Producto () {
 		
 	}
 	
@@ -24,13 +38,14 @@ public class Task {
 	 * @param id
 	 * @param name
 	 * @param description
-	 * @param user
+	 * @param stock
 	 */
-	public Task(int id, String name, String description, User user) {
+	public Producto(int id, String name, String description, float pvp, Stock stock) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.user = user;
+		this.pvp = pvp;
+		this.stock = stock;
 	}
 
 	/**
@@ -74,19 +89,33 @@ public class Task {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
 	/**
-	 * @return the user
+	 * @return the pvp
 	 */
-	public User getUser() {
-		return user;
+	public float getPvp() {
+		return pvp;
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param pvp the pvp to set
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public void setPvp(float pvp) {
+		this.pvp = pvp;
+	}
+	
+	/**
+	 * @return the stock
+	 */
+	public Stock getStock() {
+		return stock;
+	}
+
+	/**
+	 * @param stock the stock to set
+	 */
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 
 	

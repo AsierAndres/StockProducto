@@ -10,54 +10,90 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spring forms :: User Task details</title>
-
+<title>Spring forms :: Stock Producto details</title>
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 </head>
 <body>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><s:message code="navbar.app"></s:message></a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="<s:url value="/stocks/${producto.stock.id}" />"
+						title="Back to stock"><s:message code="navbar.backStock"></s:message></a></li>
+					<li><a href="<s:url value="/stocks/" />" title="View stocks"><s:message
+								code="navbar.stocks"></s:message></a></li>
+					<li><a href="<s:url value="/stocks/new" />" title="New stock"><s:message
+								code="navbar.newStock"></s:message></a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="true"><s:message
+								code="navbar.language"></s:message> <span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="?locale=en"><img src="blank.gif"
+									class="flag flag-gb"
+									alt="<s:message code="english"></s:message>" /> <s:message
+										code="english"></s:message></a></li>
+							<li><a href="?locale=es"><img src="blank.gif"
+									class="flag flag-es"
+									alt="<s:message code="spanish"></s:message>" /> <s:message
+										code="spanish"></s:message></a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-	<a href="#">Users app</a>
-	<ul>
-			<li><a href="<s:url value="/users/${task.user.id}" />" 
-				title="Back to user">Back to user</a></li>
-		<li><a href="<s:url value="/users/" />" title="View users">View
-				users</a></li>
-		<li><a href="<s:url value="/users/new" />" title="New user">New
-				user</a></li>
-	</ul>
-
-	<h1>User task detail</h1>
-	<p>See this task info</p>
-
+<div class="container">
+		<div class="jumbotron">
+	<h1>Stock producto detail</h1>
+	<p>See this producto info</p>
+</div>
 	<c:choose>
-		<c:when test="${not empty task}">
+		<c:when test="${not empty producto}">
 			<table class="table">
 				<thead>
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
 						<th>Description</th>
-						<th>User</th>
+						<th>Pvp</th>
+						<th>Stock</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>${task.id}</td>
-						<td>${task.name}</td>
-						<td>${task.description}</td>
-						<td>${task.user.login}</td>
+						<td>${producto.id}</td>
+						<td>${producto.name}</td>
+						<td>${producto.description}</td>
+						<td>${producto.pvp}</td>
+						<td>${producto.stock.estanteria}</td>
 					</tr>
 				</tbody>
 			</table>
-		
-			
+
+
 		</c:when>
 		<c:otherwise>
-			<div>A task with the id specified has not been found. Please,
-				try again</div>
+			<div>A producto with the id specified has not been found.
+				Please, try again</div>
 		</c:otherwise>
 	</c:choose>
-
-	<p class="text-muted">&copy; 2015 Eugenia Pérez</p>
-
+	<footer>
+		<div class="navbar container">
+			<p class="text-muted">&copy; 2017 Asier Andrés</p>
+		</div>
+	</footer>
+	</div>
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script
+		src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

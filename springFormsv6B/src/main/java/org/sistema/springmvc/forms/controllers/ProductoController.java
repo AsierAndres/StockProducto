@@ -2,11 +2,12 @@ package org.sistema.springmvc.forms.controllers;
 
 import java.util.Map;
 
-import org.sistema.springmvc.forms.dao.TaskDAO;
-import org.sistema.springmvc.forms.dao.UserDAO;
-import org.sistema.springmvc.forms.dtos.TaskDTO;
-import org.sistema.springmvc.forms.mappers.TaskMapper;
-import org.sistema.springmvc.forms.models.Task;
+import org.sistema.springmvc.forms.dao.ProductoDAO;
+import org.sistema.springmvc.forms.dao.StockDAO;
+import org.sistema.springmvc.forms.dtos.ProductoDTO;
+import org.sistema.springmvc.forms.mappers.ProductoMapper;
+import org.sistema.springmvc.forms.models.Producto;
+import org.sistema.springmvc.forms.models.Stock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,119 +19,119 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Controller for users.
+ * Controller for stocks.
  * 
  * @author Eugenia Pérez Martínez
  *
  */
 @Controller
-public class TaskController {
+public class ProductoController {
 	private static final Logger logger = LoggerFactory
-			.getLogger(TaskController.class);
+			.getLogger(ProductoController.class);
 
 	@Autowired
-	private TaskDAO taskDAO;
+	private ProductoDAO productoDAO;
 
 	@Autowired
-	private UserDAO userDAO;
+	private StockDAO stockDAO;
 
 	/**
-	 * handles /tasks/id
+	 * handles /productos/id
 	 * 
 	 * @param model
-	 * @return the name of the view to show RequestMapping({"/users/{id}"})
+	 * @return the name of the view to show RequestMapping({"/stocks/{id}"})
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = { "/tasks/{id}" })
-	public String userTaskDetail(@PathVariable(value = "id") Integer id,
+	@RequestMapping(method = RequestMethod.GET, value = { "/productos/{id}" })
+	public String stockProductoDetail(@PathVariable(value = "id") Integer id,
 			Map<String, Object> model) {
-		logger.info("User task detail");
+		logger.info("Stock producto detail");
 
-		Task task = taskDAO.selectById(id);
-		model.put("task", task);
+		Producto producto = productoDAO.selectById(id, Producto.class);
+		model.put("producto", producto);
 
-		return "task/taskDetail";
+		return "producto/productoDetail";
 	}
 
 	/**
-	 * handles /users/task/new by POST
+	 * handles /stocks/producto/new by POST
 	 * 
-	 * @return the name of the view to show RequestMapping({"/users/new"})
+	 * @return the name of the view to show RequestMapping({"/stocks/new"})
 	 */
-	@RequestMapping(method = RequestMethod.POST, value = { "/tasks/new" })
-	public ModelAndView createTask(Task task) {
+	@RequestMapping(method = RequestMethod.POST, value = { "/productos/new" })
+	public ModelAndView createProducto(Producto producto) {
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		if (taskDAO.create(task) > 0) {
+		if (productoDAO.insert(producto)) {
 			// We return view name
-			modelAndView.setViewName("task/created");
-			modelAndView.addObject("task", task);
-			logger.info("Saveview POST " + task.getId());
+			modelAndView.setViewName("producto/created");
+			modelAndView.addObject("producto", producto);
+			logger.info("Saveview POST " + producto.getId());
 		} else {
 			modelAndView.setViewName("error");
 			modelAndView
 					.addObject(
 							"error",
-							"An error ocurred while trying to create a new task for user. Please, try again");
+							"An error ocurred while trying to create a new producto for stock. Please, try again");
 		}
 		return modelAndView;
 	}
 
 	/**
-	 * Simply selects the update view for tasks
+	 * Simply selects the update view for productos
 	 */
-	@RequestMapping(value = "/tasks/update/{id}", method = RequestMethod.GET)
-	public String updateTask(@PathVariable(value = "id") Integer taskId,
+	@RequestMapping(value = "/productos/update/{id}", method = RequestMethod.GET)
+	public String updateProducto(@PathVariable(value = "id") Integer productoId,
 			Model model) {
-		logger.info("Showing update task view GET ");
+		logger.info("Showing update producto view GET ");
 
-		Task task = taskDAO.selectById(taskId);
+		Producto producto = productoDAO.selectById(productoId, Producto.class);
 		
-		TaskDTO taskDTO =  TaskMapper.toDTO(task);
+		ProductoDTO productoDTO =  ProductoMapper.toDTO(producto);
 				
-		model.addAttribute("task", taskDTO);
-		model.addAttribute("users", userDAO.selectAll());
+		model.addAttribute("producto", productoDTO);
+		model.addAttribute("stocks", stockDAO.selectAll(Stock.class));
 
-		return "task/update";
+		return "producto/update";
 	}
 
 	/**
-	 * Handles the POST from the Custom.jsp page to update the User.
+	 * Handles the POST from the Custom.jsp page to update the Stock.
 	 */
-	@RequestMapping(value = "/tasks/saveupdate", method = RequestMethod.POST)
-	public ModelAndView saveUpdateTask(TaskDTO taskDTO) {
-		logger.info("Save update task " + taskDTO.getId());
+	@RequestMapping(value = "/productos/saveupdate", method = RequestMethod.POST)
+	public ModelAndView saveUpdateProducto(ProductoDTO productoDTO) {
+		logger.info("Save update producto " + productoDTO.getId());
 		
-		Task task = TaskMapper.toTask(taskDTO, userDAO.selectById(taskDTO.getUserId()));
+		Producto producto = ProductoMapper.toProducto(productoDTO, stockDAO.selectById(productoDTO.getStockId(), Stock.class));
 
-		taskDAO.update(task.getId(), task);
+		productoDAO.update(producto);
 
 		ModelAndView modelAndView = new ModelAndView();
 
-		// We pass the user received through this object
-		modelAndView.addObject("task", task);
+		// We pass the stock received through this object
+		modelAndView.addObject("producto", producto);
 
-		// The same as return "user/saveUpdate"
-		modelAndView.setViewName("task/saveUpdated");
+		// The same as return "stock/saveUpdate"
+		modelAndView.setViewName("producto/saveUpdated");
 		return modelAndView;
 	}
 
 	/**
-	 * Delete the specific task
+	 * Delete the specific producto
 	 */
-	@RequestMapping(value = "/tasks/delete/{id}", method = RequestMethod.GET)
-	public String deleteTask(@PathVariable(value = "id") Integer taskId,
+	@RequestMapping(value = "/productos/delete/{id}", method = RequestMethod.GET)
+	public String deleteProducto(@PathVariable(value = "id") Integer productoId,
 			Model model) {
-		logger.info("User detail /delete task: " + taskId);
+		logger.info("Stock detail /delete producto: " + productoId);
 
-		// Store the concrete task to send it back before deleting to use it in
+		// Store the concrete producto to send it back before deleting to use it in
 		// the following view.
-		Task task = taskDAO.selectById(taskId);
-		model.addAttribute("task", task);
+		Producto producto = productoDAO.selectById(productoId, Producto.class);
+		model.addAttribute("producto", producto);
 
-		taskDAO.delete(taskId);
+		productoDAO.delete(producto);
 
-		return "task/deleted";
+		return "producto/deleted";
 	}
 
 }

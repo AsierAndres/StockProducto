@@ -1,25 +1,26 @@
 package org.sistema.springmvc.forms.mappers;
 
-import org.sistema.springmvc.forms.dtos.TaskDTO;
-import org.sistema.springmvc.forms.models.Task;
-import org.sistema.springmvc.forms.models.User;
+import org.sistema.springmvc.forms.dtos.ProductoDTO;
+import org.sistema.springmvc.forms.models.Producto;
+import org.sistema.springmvc.forms.models.Stock;
 
-public class TaskMapper {
+public class ProductoMapper {
 
-	public static Task toTask(TaskDTO taskDTO, User user) {
-		Task task = new Task();
-		task.setId(taskDTO.getId());
-		task.setDescription(taskDTO.getDescription());
-		task.setName(taskDTO.getName());
-		task.setUser(user);
-		return task;
+	public static Producto toProducto(ProductoDTO productoDTO, Stock stock) {
+		Producto producto = new Producto();
+		producto.setId(productoDTO.getId());
+		producto.setDescription(productoDTO.getDescription());
+		producto.setPvp(productoDTO.getPvp());
+		producto.setName(productoDTO.getName());
+		producto.setStock(stock);
+		return producto;
 	}
 
-	public static TaskDTO toDTO(Task task) {
-		TaskDTO taskDTO = new TaskDTO(task.getId(), task.getName(),
-				task.getDescription(), task.getUser().getId(), task.getUser()
-						.getLogin());
-		return taskDTO;
+	public static ProductoDTO toDTO(Producto producto) {
+		ProductoDTO productoDTO = new ProductoDTO(producto.getId(), producto.getName(),
+				producto.getDescription(), producto.getPvp(), producto.getStock().getId(), producto.getStock()
+						.getEstanteria());
+		return productoDTO;
 	}
 
 }

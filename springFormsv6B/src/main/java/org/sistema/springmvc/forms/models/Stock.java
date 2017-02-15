@@ -3,38 +3,51 @@ package org.sistema.springmvc.forms.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 /**
- * Represents a user.
+ * Represents a stock.
  * 
  * @author Eugenia Pérez Martínez
  *
  */
-public class User {
+@Entity
+public class Stock {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String login;
+	private int estanteria;
 	private String description;
-	private String password;
-	private Set<Task> tasks = new HashSet<Task>();
+	private int cantidad;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy ="stock")
+	private Set<Producto> productos = new HashSet<Producto>();
 
 	/**
 	 * default constructor
 	 */
-	public User() {
+	public Stock() {
 	}
 
 	/**
 	 * constructor with parameters
 	 * @param id
-	 * @param login
+	 * @param estanteria
 	 * @param description
-	 * @param password
+	 * @param cantidad
 	 */
-	public User(int id, String login, String description, String password) {
+	public Stock(int id, int estanteria, String description, int cantidad) {
 		this.id = id;
-		this.login = login;
+		this.estanteria = estanteria;
 		this.description = description;
-		this.password = password;
+		this.cantidad = cantidad;
 	}
 
 	public int getId() {
@@ -45,12 +58,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
+	public int getEstanteria() {
+		return estanteria;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setEstanteria(int estanteria) {
+		this.estanteria = estanteria;
 	}
 
 	public String getDescription() {
@@ -61,35 +74,35 @@ public class User {
 		this.description = description;
 	}
 
-	public String getPassword() {
-		return password;
+	public int getCantidad() {
+		return cantidad;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @return the tasks
-	 */
-	public Set<Task> getTasks() {
-		return tasks;
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	/**
-	 * @param tasks the tasks to set
+	 * @return the productos
 	 */
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
+	public Set<Producto> getProductos() {
+		return productos;
+	}
+
+	/**
+	 * @param productos the productos to set
+	 */
+	public void setProductos(Set<Producto> productos) {
+		this.productos = productos;
 	}
 	
 	/**
 	 * 
-	 * @param task
+	 * @param producto
 	 */
-	public void addTask(Task task){
-		this.tasks.add(task);
-		task.setUser(this);
+	public void addProducto(Producto producto){
+		this.productos.add(producto);
+		producto.setStock(this);
 	}
 
 }
