@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.sistema.springmvc.forms.dao.ProductoDAO;
 import org.sistema.springmvc.forms.dao.StockDAO;
-import org.sistema.springmvc.forms.dtos.ProductoDTO;
-import org.sistema.springmvc.forms.mappers.ProductoMapper;
 import org.sistema.springmvc.forms.models.Producto;
 import org.sistema.springmvc.forms.models.Stock;
 import org.slf4j.Logger;
@@ -87,9 +85,7 @@ public class ProductoController {
 
 		Producto producto = productoDAO.selectById(productoId, Producto.class);
 		
-		ProductoDTO productoDTO =  ProductoMapper.toDTO(producto);
-				
-		model.addAttribute("producto", productoDTO);
+		model.addAttribute("producto", producto);
 		model.addAttribute("stocks", stockDAO.selectAll(Stock.class));
 
 		return "producto/update";
@@ -99,11 +95,9 @@ public class ProductoController {
 	 * Handles the POST from the Custom.jsp page to update the Stock.
 	 */
 	@RequestMapping(value = "/productos/saveupdate", method = RequestMethod.POST)
-	public ModelAndView saveUpdateProducto(ProductoDTO productoDTO) {
-		logger.info("Save update producto " + productoDTO.getId());
+	public ModelAndView saveUpdateProducto(Producto producto) {
+		logger.info("Save update producto " + producto.getId());
 		
-		Producto producto = ProductoMapper.toProducto(productoDTO, stockDAO.selectById(productoDTO.getStockId(), Stock.class));
-
 		productoDAO.update(producto);
 
 		ModelAndView modelAndView = new ModelAndView();

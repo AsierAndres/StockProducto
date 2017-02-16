@@ -53,8 +53,8 @@
 
 <div class="container">
 		<div class="jumbotron">
-	<h1>Stock producto detail</h1>
-	<p>See this producto info</p>
+	<h1><s:message code="body.productDetail"></s:message></h1>
+	<p><s:message code="body.productInfo"></s:message></p>
 </div>
 	<c:choose>
 		<c:when test="${not empty producto}">

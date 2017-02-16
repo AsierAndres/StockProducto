@@ -46,8 +46,7 @@
 
 <div class="container">
 		<div class="jumbotron">
-	<h1>Ok, ${producto.id} producto called ${producto.name} was
-		UPDATED</h1>
+	<h1>Ok, ${producto.id} <s:message code="body.productUpdate1"></s:message> ${producto.name} <s:message code="body.productUpdate2"></s:message></h1>
 </div>
 	<footer>
 		<div class="navbar container">

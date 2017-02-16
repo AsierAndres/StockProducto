@@ -45,7 +45,7 @@
 	</nav>
 <div class="container">
 		<div class="jumbotron">
-	<h1>Ok, ${producto.id} producto was deleted</h1>
+	<h1>Ok, ${producto.id} <s:message code="body.deleted"></s:message></h1>
 </div>
 	<footer>
 		<div class="navbar container">

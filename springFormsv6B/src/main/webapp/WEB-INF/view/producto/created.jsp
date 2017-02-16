@@ -51,10 +51,9 @@
 	</nav>
 <div class="container">
 		<div class="jumbotron">
-	<h1>Producto created</h1>
+	<h1><s:message code="body.productCreated"></s:message></h1>
 </div>
-	<div class="alert alert-success" role="alert">The following
-		producto has been created successfully</div>
+	<div class="alert alert-success" role="alert"><s:message code="body.productCreatedSuccess"></s:message></div>
 	<table class="table">
 		<thead>
 			<tr>

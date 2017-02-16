@@ -53,21 +53,21 @@
 		<sf:hidden path="id" />
 		<div class="form-group">
 			<label for="name">Name</label>
-			<sf:input path="name" placeholder="name" />
+			<sf:input path="name" class="form-control" placeholder="name" />
 		</div>
 		<div class="form-group">
 			<label for="stock">Stock</label>
-			<sf:select path="stockId">
+			<sf:select class="form-control" path="stock.Id">
 				<sf:options items="${stocks}" itemLabel="estanteria" itemValue="id" />
 			</sf:select>
 		</div>
 		<div class="form-group">
 			<label for="description">Description</label>
-			<sf:textarea path="description" placeholder="Description" />
+			<sf:textarea path="description" class="form-control" placeholder="Description" />
 		</div>
 		<div class="form-group">
 			<label for="pvp">Pvp</label>
-			<sf:textarea path="pvp" placeholder="Pvp" />
+			<sf:textarea path="pvp" class="form-control" placeholder="Pvp" />
 		</div>
 		<sf:button>Update</sf:button>
 	</sf:form>

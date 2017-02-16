@@ -45,7 +45,7 @@
 	</nav>
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Update stock</h1>
+			<h1><s:message code="body.updateStock"></s:message></h1>
 		</div>
 
 
@@ -54,15 +54,15 @@
 			<sf:hidden path="id" />
 			<div class="form-group">
 				<label for="estanteria">Estanteria</label>
-				<sf:input path="estanteria" placeholder="Estanteria" />
+				<sf:input path="estanteria" class="form-control" placeholder="Estanteria" />
 			</div>
 			<div class="form-group">
 				<label for="cantidad">Cantidad</label>
-				<sf:input path="cantidad" placeholder="Cantidad" />
+				<sf:input path="cantidad" class="form-control" placeholder="Cantidad" />
 			</div>
 			<div class="form-group">
 				<label for="description">Description</label>
-				<sf:textarea path="description" placeholder="Description" />
+				<sf:textarea path="description" class="form-control" placeholder="Description" />
 			</div>
 			<sf:button>Update</sf:button>
 		</sf:form>

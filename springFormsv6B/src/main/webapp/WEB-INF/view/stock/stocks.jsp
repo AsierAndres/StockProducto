@@ -50,8 +50,8 @@
 
 <div class="container">
 		<div class="jumbotron">
-	<h1>Stocks list</h1>
-	<p>These are the stocks currently in the system.</p>
+	<h1><s:message code="body.listStock"></s:message></h1>
+	<p><s:message code="body.listStock1"></s:message></p>
 </div>
 
 	<table class="table">

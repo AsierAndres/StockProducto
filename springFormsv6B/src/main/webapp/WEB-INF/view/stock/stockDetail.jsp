@@ -51,8 +51,8 @@
 
 <div class="container">
 		<div class="jumbotron">
-	<h1>Stocks detail</h1>
-	<p>See this stock info</p>
+	<h1><s:message code="body.stocksDetail"></s:message></h1>
+	<p><s:message code="body.stocksDetail1"></s:message></p>
 </div>
 
 	<c:choose>
@@ -84,11 +84,11 @@
 				<sf:hidden path="stock.id" />
 				<div class="form-group">
 					<label for="name">Name</label>
-					<sf:input path="name" placeholder="Name" />
+					<sf:input path="name" class="form-control" placeholder="Name" />
 				</div>
 				<div class="form-group">
 					<label for="description">Description</label>
-					<sf:textarea path="description" type="description"
+					<sf:textarea path="description" class="form-control" type="description"
 						placeholder="Description" />
 				</div>
 				<sf:button>Create</sf:button>
@@ -107,10 +107,10 @@
 						<tr>
 							<td>${producto.id}</td>
 							<td>${producto.name}</td>
-							<td><a href="<s:url value="/productos/${producto.id}" />"
-								title="Detailed info"> See detail</a> || <a
+							<td><a class="btn btn-success" href="<s:url value="/productos/${producto.id}" />"
+								title="Detailed info"> See detail</a> || <a class="btn btn-warning"
 								href="<c:url value="/productos/update/${producto.id}" />">Update</a>
-								|| <a href="<c:url value="/productos/delete/${producto.id}" />">Delete</a></td>
+								|| <a class="btn btn-danger" href="<c:url value="/productos/delete/${producto.id}" />">Delete</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

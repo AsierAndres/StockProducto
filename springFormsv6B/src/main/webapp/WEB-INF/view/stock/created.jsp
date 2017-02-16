@@ -52,8 +52,7 @@
 	<h1>Stock created</h1>
 </div>
 
-	<div class="alert alert-success" role="alert">The following stock
-		has been created successfully</div>
+	<div class="alert alert-success" role="alert"><s:message code="body.stockSuccess"></s:message></div>
 	<table class="table">
 		<thead>
 			<tr>

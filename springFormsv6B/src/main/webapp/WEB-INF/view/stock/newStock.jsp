@@ -51,23 +51,26 @@
 
 <div class="container">
 		<div class="jumbotron">
-	<h1>New stock</h1>
-	<p>See this stock info</p>
+	<h1><s:message code="body.newStock"></s:message></h1>
+	<p><s:message code="body.stocksDetail1"></s:message></p>
 </div>
 
 	<c:url var="post_stock" value="/stocks/new" />
 	<sf:form method="post" modelAttribute="stock" action="${post_stock}">
 		<div class="form-group">
 			<label for="estanteria">Estanteria</label>
-			<sf:input path="estanteria" placeholder="Estanteria" />
+			<sf:input path="estanteria" class="form-control" placeholder="Estanteria" />
+				<sf:errors path="estanteria" cssClass="error" />
 		</div>
 		<div class="form-group">
 			<label for="cantidad">Cantidad</label>
-			<sf:input path="cantidad" placeholder="Cantidad" />
+			<sf:input path="cantidad" class="form-control" placeholder="Cantidad" />
+				<sf:errors path="cantidad" cssClass="error" />
 		</div>
 		<div class="form-group">
 			<label for="description">Description</label>
-			<sf:textarea path="description" placeholder="Description" />
+			<sf:textarea path="description" class="form-control" placeholder="Description" />
+				<sf:errors path="description" cssClass="error" />
 		</div>
 		<sf:button>Create</sf:button>
 	</sf:form>

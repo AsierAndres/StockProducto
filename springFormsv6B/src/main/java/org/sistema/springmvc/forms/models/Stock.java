@@ -10,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Represents a stock.
@@ -23,8 +27,15 @@ public class Stock {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Digits(integer=6, fraction = 0, message = "Integer please")
 	private int estanteria;
+	
+	@NotNull(message = "The name is required")
+	@Pattern(regexp = "[A-Za-z]+", message = "Must contain only chars.")
 	private String description;
+	
+	@Digits(integer=6, fraction = 0, message = "Integer please")
 	private int cantidad;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy ="stock")

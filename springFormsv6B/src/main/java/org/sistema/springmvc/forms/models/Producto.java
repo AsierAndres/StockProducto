@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  * Represents a Producto.
@@ -19,9 +22,18 @@ public class Producto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
+
+	@NotNull(message = "The name is required")
+	@Pattern(regexp = "[A-Za-z]+", message = "Must contain only chars")
 	private String name;
+
+	@NotNull(message = "The description is required")
+	@Pattern(regexp = "[A-Za-z]+", message = "Must contain only chars")
 	private String description;
+	
+
+
+	@Digits(integer=6, fraction = 2, message = "Float please")
 	private float pvp;
 	
 	@ManyToOne
