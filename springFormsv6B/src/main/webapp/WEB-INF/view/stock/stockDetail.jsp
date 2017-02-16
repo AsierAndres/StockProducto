@@ -109,7 +109,7 @@
 							<td>${producto.name}</td>
 							<td><a class="btn btn-success" href="<s:url value="/productos/${producto.id}" />"
 								title="Detailed info"> See detail</a> || <a class="btn btn-warning"
-								href="<c:url value="/productos/update/${producto.id}" />">Update</a>
+								href="<c:url value="/productos/update/${producto.id}" />">Update </a>
 								|| <a class="btn btn-danger" href="<c:url value="/productos/delete/${producto.id}" />">Delete</a></td>
 						</tr>
 					</c:forEach>
